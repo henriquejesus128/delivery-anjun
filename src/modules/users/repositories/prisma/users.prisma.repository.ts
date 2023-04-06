@@ -3,9 +3,11 @@ import { UsersRepository } from '../users.repository';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { UpdateUserDto } from '../../dto/update-user.dto';
 import { User } from '../../entities/user.entity';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class UsersPrismaRepository implements UsersRepository {
+  constructor(private prisma: PrismaService) {}
   create(data: CreateUserDto): User | Promise<User> {
     throw new Error('Method not implemented.');
   }
