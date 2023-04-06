@@ -18,18 +18,29 @@ export class UsersPrismaRepository implements UsersRepository {
   }
 
   async findAll(): Promise<User[]> {
-    throw new Error('Method not implemented.');
+    const users = await this.prisma.user.findMany();
+    return plainToInstance(User, users);
   }
-  findOne(id: string): User | Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async findOne(id: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    return plainToInstance(User, user);
   }
-  update(id: string, data: UpdateUserDto): User | Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async update(id: string, data: UpdateUserDto): Promise<User> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: { ...data },
+    });
+    return plainToInstance(User, user);
   }
-  delete(id: string): void | Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.user.delete({ where: { id } });
   }
-  findByEmail(email: string): User | Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    return plainToInstance(User, user);
   }
 }
