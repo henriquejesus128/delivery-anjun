@@ -15,5 +15,6 @@ import { ProductsRepository } from './repositories/products.repository';
       useClass: ProductsPrismaRepository,
     },
   ],
+  exports: [ProductsService],
 })
 export class ProductsModule {}
