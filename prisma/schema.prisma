@@ -17,3 +17,10 @@ model User {
   password String
   @@map("users")
 }
+
+model Product {
+  id String @id
+  name String
+  type String
+  @@map("products")
+}
