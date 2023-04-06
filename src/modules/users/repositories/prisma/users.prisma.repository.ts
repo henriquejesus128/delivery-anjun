@@ -4,14 +4,20 @@ import { CreateUserDto } from '../../dto/create-user.dto';
 import { UpdateUserDto } from '../../dto/update-user.dto';
 import { User } from '../../entities/user.entity';
 import { PrismaService } from 'src/database/prisma.service';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersPrismaRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
-  create(data: CreateUserDto): User | Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async create(data: CreateUserDto): Promise<User> {
+    const user = new User();
+    Object.assign(user, { ...data });
+    const newUser = await this.prisma.user.create({ data: { ...user } });
+    return plainToInstance(User, newUser);
   }
-  findAll(): User[] | Promise<User[]> {
+
+  async findAll(): Promise<User[]> {
     throw new Error('Method not implemented.');
   }
   findOne(id: string): User | Promise<User> {
