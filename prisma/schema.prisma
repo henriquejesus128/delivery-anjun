@@ -15,6 +15,7 @@ model User {
   name String
   email String @unique
   password String
+  delivery Delivery[]
   @@map("users")
 }
 
@@ -22,5 +23,43 @@ model Product {
   id String @id
   name String
   type String
+  delivery Delivery[]
   @@map("products")
+}
+
+model Address {
+  id String @id
+  street String
+  number String
+  complement String @default("")
+  city String
+  state String
+  zipCope String
+  recipients Recipient?
+  @@map("adresses")
+}
+
+model Recipient {
+  id String @id
+  name String
+  address Address @relation(fields: [adressId], references: [id])
+  adressId String @unique
+  delivery Delivery[]
+  @@map("recipients")
+}
+
+model Delivery {
+  id String @id @default(uuid())
+
+  sender User @relation(fields: [senderId], references: [id])
+  senderId String
+
+  recipient Recipient @relation(fields: [recipientId], references: [id])
+  recipientId String
+
+  product Product @relation(fields: [productId], references: [id])
+  productId String
+
+  devlivery Boolean @default(false)
+  @@map("deliveries")
 }
