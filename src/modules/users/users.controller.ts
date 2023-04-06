@@ -27,6 +27,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return this.usersService.findAll();
