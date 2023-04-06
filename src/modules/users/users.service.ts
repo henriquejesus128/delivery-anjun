@@ -11,6 +11,7 @@ import { UsersRepository } from './repositories/users.repository';
 @Injectable()
 export class UsersService {
   constructor(private userRepository: UsersRepository) {}
+
   async create(createUserDto: CreateUserDto) {
     const { email } = createUserDto;
 
