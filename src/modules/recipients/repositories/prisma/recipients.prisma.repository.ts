@@ -32,8 +32,8 @@ export class RecipientsPrismaRepository implements RecipientsRepository {
     return plainToInstance(Recipient, recipient);
   }
 
-  async findOne(data: CreateRecipientDto): Promise<Recipient> {
-    const recipient = await this.prisma.recipient.findFirst({ where: data });
+  async findOne(id: string): Promise<Recipient> {
+    const recipient = await this.prisma.recipient.findUnique({ where: { id } });
     return plainToInstance(Recipient, recipient);
   }
 
