@@ -1,11 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { Address } from 'src/modules/adresses/entities/adress.entity';
 
 export class Recipient {
   readonly id: string;
 
   name: string;
-  address: Address;
+  adressId: string;
 
   constructor() {
     this.id = randomUUID();
