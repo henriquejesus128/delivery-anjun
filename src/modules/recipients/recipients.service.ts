@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRecipientDto } from './dto/create-recipient.dto';
-import { UpdateRecipientDto } from './dto/update-recipient.dto';
 
 @Injectable()
 export class RecipientsService {
