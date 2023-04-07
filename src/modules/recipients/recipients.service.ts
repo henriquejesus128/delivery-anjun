@@ -12,15 +12,7 @@ export class RecipientsService {
     return `This action returns all recipients`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} recipient`;
-  }
-
-  update(id: number, updateRecipientDto: UpdateRecipientDto) {
-    return `This action updates a #${id} recipient`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} recipient`;
   }
 }
