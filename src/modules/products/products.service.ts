@@ -21,24 +21,47 @@ export class ProductsService {
       throw new ConflictException(`User already exists!`);
     }
 
-    // const product = await this.prisma.product.create({
-    //   data: createProductDto,
-    // });
+    const product = await this.prisma.product.create({
+      data: createProductDto,
+    });
+
+    return product;
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll() {
+    return await this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    const findProduct = await this.prisma.product.findUnique({ where: { id } });
+
+    if (!findProduct) {
+      throw new NotFoundException(`Product not found!`);
+    }
+
+    return findProduct;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const findProduct = await this.prisma.product.findUnique({ where: { id } });
+
+    if (!findProduct) {
+      throw new NotFoundException(`Product not found!`);
+    }
+
+    const updateProduct = await this.prisma.user.update({
+      where: { id },
+      data: { ...updateProductDto },
+    });
+
+    return updateProduct;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const findProduct = await this.prisma.product.findUnique({ where: { id } });
+    if (!findProduct) {
+      throw new NotFoundException(`User not found!`);
+    }
+    return await this.prisma.product.delete({ where: { id } });
   }
 }
