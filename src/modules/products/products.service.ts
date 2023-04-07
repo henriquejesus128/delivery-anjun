@@ -18,7 +18,7 @@ export class ProductsService {
     });
 
     if (findProduct) {
-      throw new ConflictException(`User already exists!`);
+      throw new ConflictException(`Product already exists!`);
     }
 
     const product = await this.prisma.product.create({
@@ -29,7 +29,7 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.product.findMany();
   }
 
   async findOne(id: string) {
@@ -49,7 +49,7 @@ export class ProductsService {
       throw new NotFoundException(`Product not found!`);
     }
 
-    const updateProduct = await this.prisma.user.update({
+    const updateProduct = await this.prisma.product.update({
       where: { id },
       data: { ...updateProductDto },
     });
@@ -60,8 +60,9 @@ export class ProductsService {
   async remove(id: string) {
     const findProduct = await this.prisma.product.findUnique({ where: { id } });
     if (!findProduct) {
-      throw new NotFoundException(`User not found!`);
+      throw new NotFoundException(`Product not found!`);
     }
-    return await this.prisma.product.delete({ where: { id } });
+    await this.prisma.product.delete({ where: { id } });
+    return;
   }
 }
