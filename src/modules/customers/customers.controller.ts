@@ -12,10 +12,10 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { CreateCustomerDto } from './dto/create-customer.dto';
+import { CreateCustomerDto } from './dto/customers/create-customer.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { UpdateCustomerDto } from './dto/customers/update-customer.dto';
 
 @ApiTags('customers')
 @Controller('customers')
