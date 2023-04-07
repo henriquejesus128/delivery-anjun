@@ -42,7 +42,7 @@ model Address {
 model Customer{
   id String @id @default(uuid())
   name String
-  order Order[]
+  orders Order[]
   address Address @relation(fields: [addressId], references: [id])
   addressId String @unique
   @@map("customers")
