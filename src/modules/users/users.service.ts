@@ -60,7 +60,6 @@ export class UsersService {
 
   async findByEmail(email: string) {
     const findUser = await this.prisma.user.findUnique({ where: { email } });
-    delete findUser.password;
     return findUser;
   }
 
@@ -82,6 +81,7 @@ export class UsersService {
     if (!findUser) {
       throw new NotFoundException(`User not found!`);
     }
-    return await this.prisma.user.delete({ where: { id } });
+    await this.prisma.user.delete({ where: { id } });
+    return;
   }
 }
