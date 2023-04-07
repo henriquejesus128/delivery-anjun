@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { RecipientsService } from './recipients.service';
 import { CreateRecipientDto } from './dto/create-recipient.dto';
@@ -18,18 +20,21 @@ export class RecipientsController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   create(@Body() createRecipientDto: CreateRecipientDto) {
     return this.recipientsService.create(createRecipientDto);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return this.recipientsService.findAll();
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   findOne(@Param('id') id: string) {
     return this.recipientsService.findOne(id);
   }

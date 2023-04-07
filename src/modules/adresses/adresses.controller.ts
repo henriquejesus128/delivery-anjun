@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { AdressesService } from './adresses.service';
 import { CreateAddressDto } from './dto/create-adress.dto';
@@ -18,6 +20,7 @@ export class AdressesController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   create(@Body() createAdressDto: CreateAddressDto) {
     return this.adressesService.create(createAdressDto);
   }
