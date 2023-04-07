@@ -17,3 +17,39 @@ model User {
   password String 
   @@map("users")
 }
+
+model Product {
+  id String @id @default(uuid())
+  name String @unique
+  order Order @relation(fields: [orderId], references: [id])
+  orderId String
+}
+
+model Address {
+  id String @id @default(uuid())
+  street String
+  number String
+  complement String
+  city String
+  state String
+  zipCope String
+  customers Customer?
+  @@map("adresses")
+}
+
+model Customer{
+  id String @id @default(uuid())
+  name String
+  order Order[]
+  address Address @relation(fields: [addressId], references: [id])
+  addressId String @unique
+  @@map("customers")
+}
+
+model Order {
+  id String @id @default(uuid())
+  status String
+  customer Customer @relation(fields: [customersId], references: [id])
+  customersId String
+  product Product[]
+}
