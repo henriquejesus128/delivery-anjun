@@ -35,7 +35,7 @@ model Address {
   city String
   state String
   zipCope String
-  customers Customer?
+  customer Customer?
   @@map("adresses")
 }
 
