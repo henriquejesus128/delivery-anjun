@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductsRepository } from './repositories/products.repository';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private productRepository: ProductsRepository) {}
+  async create(createProductDto: CreateProductDto) {
+    const { name } = createProductDto;
+
+    const findProduct = await this.productRepository.findName(name);
+
+    if (findProduct) {
+      throw new ConflictException(`Product already exists!`);
+    }
+
+    const product = await this.productRepository.create(createProductDto);
+
+    return product;
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll() {
+    return await this.productRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
+  async findOne(id: string) {
+    const findProduct = await this.productRepository.findOne(id);
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
-  }
+    if (!findProduct) {
+      throw new NotFoundException(`User not found!`);
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+    return await this.productRepository.findOne(id);
   }
 }

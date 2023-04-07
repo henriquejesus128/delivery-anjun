@@ -6,9 +6,5 @@ export abstract class ProductsRepository {
   abstract create(data: CreateProductDto): Promise<Product> | Product;
   abstract findAll(): Promise<Product[]> | Product[];
   abstract findOne(id: string): Promise<Product | undefined> | Product;
-  abstract update(
-    id: string,
-    data: UpdateProductDto,
-  ): Promise<Product> | Product;
-  abstract delete(id: string): Promise<void> | void;
+  abstract findName(name: string): Promise<Product | undefined> | Product;
 }

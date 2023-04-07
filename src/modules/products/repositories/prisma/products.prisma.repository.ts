@@ -4,7 +4,6 @@ import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { CreateProductDto } from '../../dto/create-product.dto';
 import { Product } from '../../entities/product.entity';
-import { UpdateProductDto } from '../../dto/update-product.dto';
 
 @Injectable()
 export class ProductsPrismaRepository implements ProductsRepository {
@@ -29,15 +28,10 @@ export class ProductsPrismaRepository implements ProductsRepository {
     return plainToInstance(Product, product);
   }
 
-  async update(id: string, data: UpdateProductDto): Promise<Product> {
-    const product = await this.prisma.product.update({
-      where: { id },
-      data: { ...data },
+  async findName(name: string): Promise<Product> {
+    const product = await this.prisma.product.findFirst({
+      where: { name: name },
     });
     return plainToInstance(Product, product);
-  }
-
-  async delete(id: string): Promise<void> {
-    await this.prisma.product.delete({ where: { id } });
   }
 }
