@@ -6,26 +6,26 @@ import {
   Patch,
   Param,
   Delete,
-  ParseUUIDPipe,
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CustomersService } from './customers.service';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { CreateCustomerDto } from './dto/create-customer.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 
-@ApiTags('users')
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+@ApiTags('customers')
+@Controller('customers')
+export class CustomersController {
+  constructor(private readonly customersService: CustomersService) {}
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  create(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.customersService.create(createCustomerDto);
   }
 
   @Get()
@@ -33,7 +33,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
-    return this.usersService.findAll();
+    return this.customersService.findAll();
   }
 
   @Get(':id')
@@ -41,7 +41,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.usersService.findOne(id);
+    return this.customersService.findOne(id);
   }
 
   @Patch(':id')
@@ -50,15 +50,15 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return this.customersService.update(id, updateCustomerDto);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.usersService.remove(id);
+    return this.customersService.remove(id);
   }
 }
