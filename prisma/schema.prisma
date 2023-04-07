@@ -22,8 +22,8 @@ model User {
 model Product {
   id String @id @default(uuid())
   name String @unique
-  order Order @relation(fields: [orderId], references: [id])
-  orderId String
+  order Order? @relation(fields: [orderId], references: [id])
+  orderId String?
   @@map("products")
 }
 

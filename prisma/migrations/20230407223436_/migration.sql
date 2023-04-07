@@ -12,7 +12,7 @@ CREATE TABLE "users" (
 CREATE TABLE "products" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "orderId" TEXT NOT NULL,
+    "orderId" TEXT,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
@@ -62,7 +62,7 @@ CREATE UNIQUE INDEX "customers_addressId_key" ON "customers"("addressId");
 CREATE UNIQUE INDEX "orders_userId_key" ON "orders"("userId");
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "customers" ADD CONSTRAINT "customers_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "adresses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
