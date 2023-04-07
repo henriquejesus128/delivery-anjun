@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateRecipientDto {
   @IsString()
   @IsNotEmpty()
-  name: String;
+  name: string;
 
   @IsString()
   @IsNotEmpty()
