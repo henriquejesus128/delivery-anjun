@@ -1,26 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAdressDto } from './dto/create-adress.dto';
-import { UpdateAdressDto } from './dto/update-adress.dto';
+import { Injectable, ConflictException } from '@nestjs/common';
+import { CreateAddressDto } from './dto/create-adress.dto';
+import { AdressesRepository } from './repositories/adresses.repository';
 
 @Injectable()
 export class AdressesService {
-  create(createAdressDto: CreateAdressDto) {
-    return 'This action adds a new adress';
-  }
+  constructor(private addressRepository: AdressesRepository) {}
 
-  findAll() {
-    return `This action returns all adresses`;
-  }
+  async create(createAddressDto: CreateAddressDto) {
+    const findAddress = await this.addressRepository.findOne(createAddressDto);
 
-  findOne(id: number) {
-    return `This action returns a #${id} adress`;
-  }
+    if (findAddress) {
+      throw new ConflictException(`Address already exists!`);
+    }
 
-  update(id: number, updateAdressDto: UpdateAdressDto) {
-    return `This action updates a #${id} adress`;
-  }
+    const address = await this.addressRepository.create(createAddressDto);
 
-  remove(id: number) {
-    return `This action removes a #${id} adress`;
+    return address;
   }
 }
