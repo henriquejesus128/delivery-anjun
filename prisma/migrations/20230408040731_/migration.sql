@@ -45,7 +45,7 @@ CREATE TABLE "customers" (
 -- CreateTable
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
-    "status" "Status" NOT NULL DEFAULT 'created',
+    "status" "Status" DEFAULT 'created',
     "recipientId" TEXT NOT NULL,
     "senderId" TEXT NOT NULL,
 
