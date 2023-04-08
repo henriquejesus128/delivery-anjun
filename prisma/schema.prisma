@@ -54,7 +54,7 @@ model Customer {
 
 model Order {
   id          String    @id @default(uuid())
-  status      Status
+  status      Status @default(created)
   recipient    Customer  @relation(fields: [recipientId], references: [id])
   recipientId String
   sender        User      @relation(fields: [senderId], references: [id])
