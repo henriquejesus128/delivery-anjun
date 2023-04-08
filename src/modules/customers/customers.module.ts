@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
 import { PrismaService } from 'src/database/prisma.service';
-import { ZipCodeService } from './zipcode/zipcode.axios';
+import { ZipCodeService } from './zipcode/zipcode.service';
 
 @Module({
   controllers: [CustomersController],
