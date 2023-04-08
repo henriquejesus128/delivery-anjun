@@ -13,9 +13,7 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto) {
     const { name } = createProductDto;
 
-    const findProduct = await this.prisma.product.findFirst({
-      where: { name },
-    });
+    const findProduct = await this.findByName(name);
 
     if (findProduct) {
       throw new ConflictException(`Product already exists!`);
@@ -26,6 +24,13 @@ export class ProductsService {
     });
 
     return product;
+  }
+
+  async findByName(name: string) {
+    const findProduct = await this.prisma.product.findUnique({
+      where: { name },
+    });
+    return findProduct;
   }
 
   async findAll() {
