@@ -62,11 +62,4 @@ export class OrdersController {
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(id, updateOrderDto);
   }
-
-  @Delete(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(id);
-  }
 }

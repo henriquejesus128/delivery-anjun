@@ -78,8 +78,4 @@ export class OrdersService {
     });
     return updateOrder;
   }
-
-  async remove(id: string) {
-    return `This action removes a #${id} order`;
-  }
 }
