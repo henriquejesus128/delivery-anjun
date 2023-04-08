@@ -6,12 +6,21 @@ import {
 import { CreateCustomerDto } from './dto/customers/create-customer.dto';
 import { PrismaService } from 'src/database/prisma.service';
 import { UpdateCustomerDto } from './dto/customers/update-customer.dto';
+import { ZipCodeService } from './zipcode/zipcode.service';
 
 @Injectable()
 export class CustomersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private zipCodeService: ZipCodeService,
+  ) {}
   async create(createCustomerDto: CreateCustomerDto) {
     const { address, name } = createCustomerDto;
+
+    if (address.zipCope) {
+      const resp = await this.zipCodeService.fetchZipCode(address.zipCope);
+      console.log(resp);
+    }
 
     const findCustomer = await this.prisma.customer.findFirst({
       where: { name: name },
