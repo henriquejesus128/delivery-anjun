@@ -54,11 +54,11 @@ model Customer {
 
 model Order {
   id          String    @id @default(uuid())
-  status      Status @default(created)
-  recipient    Customer  @relation(fields: [recipientId], references: [id])
+  status      Status    @default(created)
+  recipient   Customer  @relation(fields: [recipientId], references: [id])
   recipientId String
-  sender        User      @relation(fields: [senderId], references: [id])
-  senderId      String    @unique
+  sender      User      @relation(fields: [senderId], references: [id])
+  senderId    String    @unique
   products    Product[]
 
   @@map("orders")
