@@ -31,7 +31,22 @@ export class CustomersService {
   }
 
   async findAll() {
-    return await this.prisma.customer.findMany({ include: { address: true } });
+    return await this.prisma.customer.findMany({
+      include: {
+        address: {
+          select: {
+            id: true,
+            city: true,
+            complement: true,
+            number: true,
+            state: true,
+            street: true,
+            zipCope: true,
+            customerId: false,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string) {
