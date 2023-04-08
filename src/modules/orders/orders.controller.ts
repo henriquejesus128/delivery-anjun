@@ -27,8 +27,8 @@ export class OrdersController {
     @Request() req: any,
     @Param('id') id_customer: string,
   ) {
-    const { email } = req.user.data;
-    return this.ordersService.create(createOrderDto, email, id_customer);
+    const { subject } = req.user.data;
+    return this.ordersService.create(createOrderDto, subject, id_customer);
   }
 
   @Get()
