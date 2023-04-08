@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('created', 'delivered', 'onTheWay');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
@@ -42,9 +45,9 @@ CREATE TABLE "customers" (
 -- CreateTable
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
-    "customersId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "status" "Status" NOT NULL,
+    "recipientId" TEXT NOT NULL,
+    "senderId" TEXT NOT NULL,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
@@ -59,7 +62,7 @@ CREATE UNIQUE INDEX "products_name_key" ON "products"("name");
 CREATE UNIQUE INDEX "adresses_customerId_key" ON "adresses"("customerId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "orders_userId_key" ON "orders"("userId");
+CREATE UNIQUE INDEX "orders_senderId_key" ON "orders"("senderId");
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -68,7 +71,7 @@ ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orde
 ALTER TABLE "adresses" ADD CONSTRAINT "adresses_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "customers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_customersId_fkey" FOREIGN KEY ("customersId") REFERENCES "customers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "orders" ADD CONSTRAINT "orders_recipientId_fkey" FOREIGN KEY ("recipientId") REFERENCES "customers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "orders" ADD CONSTRAINT "orders_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
