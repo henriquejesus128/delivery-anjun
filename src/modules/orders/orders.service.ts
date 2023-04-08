@@ -40,26 +40,43 @@ export class OrdersService {
       }
     }
 
-    // const order = await this.prisma.order.create({
-    //   data: {
-    //     ...createOrderDto,
-    //     senderId: id_user,
-    //     recipientId: id_customer,
-    //   },
-    // });
-    // return order;
+    const order = await this.prisma.order.create({
+      data: {
+        senderId: id_user,
+        recipientId: id_customer,
+        products: {
+          connect: productList.map((product) => ({ id: product.id })),
+        },
+      },
+    });
+
+    return order;
   }
 
   async findAll() {
-    return `This action returns all orders`;
+    return await this.prisma.order.findMany();
   }
 
-  async findOne(id: string) {
-    return `This action returns a #${id} order`;
+  async findBySender(id_sender: string) {
+    const findOrder = await this.prisma.order.findMany({
+      where: { senderId: id_sender },
+    });
+    return findOrder;
+  }
+
+  async findByRecipient(id_recipient: string) {
+    const findOrder = await this.prisma.order.findMany({
+      where: { recipientId: id_recipient },
+    });
+    return findOrder;
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+    const updateOrder = await this.prisma.order.update({
+      where: { id },
+      data: { ...updateOrderDto },
+    });
+    return updateOrder;
   }
 
   async remove(id: string) {
