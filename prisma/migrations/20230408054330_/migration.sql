@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('created', 'delivered', 'onTheWay');
+CREATE TYPE "Status" AS ENUM ('created', 'delivered', 'onTheWay', 'canceled');
 
 -- CreateTable
 CREATE TABLE "users" (
