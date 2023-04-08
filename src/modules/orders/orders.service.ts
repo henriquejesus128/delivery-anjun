@@ -50,11 +50,18 @@ export class OrdersService {
       },
     });
 
-    return order;
+    return this.findOne(order.id);
   }
 
   async findAll() {
     return await this.prisma.order.findMany();
+  }
+
+  async findOne(id: string) {
+    return await this.prisma.order.findUnique({
+      where: { id },
+      include: { products: true },
+    });
   }
 
   async findByProduct(id_product: string) {
