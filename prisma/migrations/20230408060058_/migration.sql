@@ -61,9 +61,6 @@ CREATE UNIQUE INDEX "products_name_key" ON "products"("name");
 -- CreateIndex
 CREATE UNIQUE INDEX "adresses_customerId_key" ON "adresses"("customerId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "orders_senderId_key" ON "orders"("senderId");
-
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 

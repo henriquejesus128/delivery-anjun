@@ -58,7 +58,7 @@ model Order {
   recipient   Customer  @relation(fields: [recipientId], references: [id])
   recipientId String
   sender      User      @relation(fields: [senderId], references: [id])
-  senderId    String    @unique
+  senderId    String   
   products    Product[]
 
   @@map("orders")
