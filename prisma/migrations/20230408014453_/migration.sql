@@ -26,6 +26,7 @@ CREATE TABLE "adresses" (
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "zipCope" TEXT NOT NULL,
+    "customerId" TEXT NOT NULL,
 
     CONSTRAINT "adresses_pkey" PRIMARY KEY ("id")
 );
@@ -34,7 +35,6 @@ CREATE TABLE "adresses" (
 CREATE TABLE "customers" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "addressId" TEXT NOT NULL,
 
     CONSTRAINT "customers_pkey" PRIMARY KEY ("id")
 );
@@ -56,7 +56,7 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "products_name_key" ON "products"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "customers_addressId_key" ON "customers"("addressId");
+CREATE UNIQUE INDEX "adresses_customerId_key" ON "adresses"("customerId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "orders_userId_key" ON "orders"("userId");
@@ -65,7 +65,7 @@ CREATE UNIQUE INDEX "orders_userId_key" ON "orders"("userId");
 ALTER TABLE "products" ADD CONSTRAINT "products_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "customers" ADD CONSTRAINT "customers_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "adresses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "adresses" ADD CONSTRAINT "adresses_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "customers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "orders" ADD CONSTRAINT "orders_customersId_fkey" FOREIGN KEY ("customersId") REFERENCES "customers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

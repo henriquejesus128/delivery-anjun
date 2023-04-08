@@ -35,7 +35,8 @@ model Address {
   city String
   state String
   zipCope String
-  customer Customer?
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId String @unique
   @@map("adresses")
 }
 
@@ -43,8 +44,7 @@ model Customer{
   id String @id @default(uuid())
   name String
   orders Order[]
-  address Address @relation(fields: [addressId], references: [id])
-  addressId String @unique
+  address Address?
   @@map("customers")
 }
 
