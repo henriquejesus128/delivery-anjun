@@ -6,7 +6,7 @@ export class CreateCustomerDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name: String;
+  name: string;
 
   @ApiProperty()
   @IsNotEmpty()
