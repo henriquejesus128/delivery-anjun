@@ -57,6 +57,13 @@ export class OrdersService {
     return await this.prisma.order.findMany();
   }
 
+  async findByProduct(id_product: string) {
+    const findOrder = await this.prisma.order.findMany({
+      where: { products: { every: { id: id_product } } },
+    });
+    return findOrder;
+  }
+
   async findBySender(id_sender: string) {
     const findOrder = await this.prisma.order.findMany({
       where: { senderId: id_sender },

@@ -41,6 +41,13 @@ export class OrdersController {
     return this.ordersService.findAll();
   }
 
+  @Get('product/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  findByProduct(@Param('id') id: string) {
+    return this.ordersService.findByProduct(id);
+  }
+
   @Get('sender/:id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
