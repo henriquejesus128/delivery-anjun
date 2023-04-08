@@ -54,7 +54,11 @@ export class OrdersService {
   }
 
   async findAll() {
-    return await this.prisma.order.findMany();
+    return await this.prisma.order.findMany({
+      include: {
+        products: { select: { id: true, name: true, orderId: false } },
+      },
+    });
   }
 
   async findOne(id: string) {
@@ -69,6 +73,9 @@ export class OrdersService {
   async findByProduct(id_product: string) {
     const findOrder = await this.prisma.order.findMany({
       where: { products: { every: { id: id_product } } },
+      include: {
+        products: { select: { id: true, name: true, orderId: false } },
+      },
     });
     return findOrder;
   }
@@ -76,6 +83,9 @@ export class OrdersService {
   async findBySender(id_sender: string) {
     const findOrder = await this.prisma.order.findMany({
       where: { senderId: id_sender },
+      include: {
+        products: { select: { id: true, name: true, orderId: false } },
+      },
     });
     return findOrder;
   }
@@ -83,6 +93,9 @@ export class OrdersService {
   async findByRecipient(id_recipient: string) {
     const findOrder = await this.prisma.order.findMany({
       where: { recipientId: id_recipient },
+      include: {
+        products: { select: { id: true, name: true, orderId: false } },
+      },
     });
     return findOrder;
   }
@@ -92,6 +105,6 @@ export class OrdersService {
       where: { id },
       data: { ...updateOrderDto },
     });
-    return updateOrder;
+    return this.findOne(updateOrder.id);
   }
 }
