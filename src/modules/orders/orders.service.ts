@@ -14,6 +14,7 @@ export class OrdersService {
     private customersService: CustomersService,
     private productsService: ProductsService,
   ) {}
+
   async create(
     createOrderDto: CreateOrderDto,
     id_user: string,
@@ -49,9 +50,10 @@ export class OrdersService {
           connect: productList.map((product) => ({ id: product.id })),
         },
       },
+      include: { products: true },
     });
 
-    return this.findOne(order.id);
+    return order;
   }
 
   async findAll(): Promise<IOrder[]> {
@@ -105,7 +107,8 @@ export class OrdersService {
     const updateOrder = await this.prisma.order.update({
       where: { id },
       data: { ...updateOrderDto },
+      include: { products: true },
     });
-    return this.findOne(updateOrder.id);
+    return updateOrder;
   }
 }
