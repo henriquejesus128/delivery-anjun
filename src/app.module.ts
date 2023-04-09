@@ -6,7 +6,13 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ProductsModule, CustomersModule, OrdersModule],
+  imports: [
+    UsersModule,
+    AuthModule,
+    ProductsModule,
+    CustomersModule,
+    OrdersModule,
+  ],
   controllers: [],
   providers: [],
 })
