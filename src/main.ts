@@ -12,7 +12,6 @@ async function bootstrap() {
       'A crud of users and products where to deliver these products to other users',
     )
     .setVersion('1,0')
-    .addTag('delibery')
     .addBearerAuth()
     .build();
 
