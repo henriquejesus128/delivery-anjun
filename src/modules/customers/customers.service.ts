@@ -6,11 +6,12 @@ import {
 import { CreateCustomerDto } from './dto/customers/create-customer.dto';
 import { PrismaService } from 'src/database/prisma.service';
 import { UpdateCustomerDto } from './dto/customers/update-customer.dto';
+import { ICustomer } from 'src/interface/interface';
 
 @Injectable()
 export class CustomersService {
   constructor(private prisma: PrismaService) {}
-  async create(createCustomerDto: CreateCustomerDto) {
+  async create(createCustomerDto: CreateCustomerDto): Promise<ICustomer> {
     const { address, name } = createCustomerDto;
 
     // if (address.zipCope) {
@@ -35,7 +36,7 @@ export class CustomersService {
     return await this.findOne(customer.id);
   }
 
-  async findAll() {
+  async findAll(): Promise<ICustomer[]> {
     return await this.prisma.customer.findMany({
       include: {
         address: {
@@ -54,7 +55,7 @@ export class CustomersService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<ICustomer> {
     const findCustomer = await this.prisma.customer.findUnique({
       where: { id },
       include: { address: true },
@@ -69,7 +70,10 @@ export class CustomersService {
     return findCustomer;
   }
 
-  async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+  async update(
+    id: string,
+    updateCustomerDto: UpdateCustomerDto,
+  ): Promise<ICustomer> {
     const { address } = updateCustomerDto;
 
     const findCustomer = await this.prisma.customer.findUniqueOrThrow({
@@ -95,7 +99,7 @@ export class CustomersService {
     return await this.findOne(updateCustomer.id);
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<void> {
     const findCustomer = await this.prisma.customer.findUniqueOrThrow({
       where: { id },
       include: {
