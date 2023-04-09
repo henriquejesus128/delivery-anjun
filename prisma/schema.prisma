@@ -34,9 +34,10 @@ model Address {
   street     String
   number     String
   complement String
+  neighborhood String
   city       String
   state      String
-  zipCope    String
+  zipCode    String
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   customerId String   @unique
 
