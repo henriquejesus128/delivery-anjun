@@ -24,7 +24,7 @@ Para rodar a aplicação, execute o seguinte comando:
 npm run start:dev
 ```
 
-A documentação API pode ser acessada em `http://localhost:3000/api`.
+A documentação API pode ser acessada em [Documentação](http://localhost:3000/api).
 
 ## Licença
 
