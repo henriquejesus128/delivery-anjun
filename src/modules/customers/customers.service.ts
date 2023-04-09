@@ -14,8 +14,8 @@ export class CustomersService {
   async create(createCustomerDto: CreateCustomerDto): Promise<ICustomer> {
     const { address, name } = createCustomerDto;
 
-    // if (address.zipCope) {
-    //   const resp = await this.zipCodeService.fetchZipCode(address.zipCope);
+    // if (address.zipCode) {
+    //   const resp = await this.zipCodeService.fetchZipCode(address.zipCode);
     //   console.log(resp);
     // }
 
@@ -44,10 +44,11 @@ export class CustomersService {
             id: true,
             city: true,
             complement: true,
+            neighborhood: true,
             number: true,
             state: true,
             street: true,
-            zipCope: true,
+            zipCode: true,
             customerId: false,
           },
         },
