@@ -17,7 +17,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { UpdateCustomerDto } from './dto/customers/update-customer.dto';
 
-@ApiTags('customers')
+@ApiTags('Customer')
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
