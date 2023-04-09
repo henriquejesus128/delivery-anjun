@@ -6,29 +6,33 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/database/prisma.service';
-import { IUser } from '../../interface/interface';
+import { IFindByEmail, IUser } from '../../interface/interface';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<IUser> {
     const { email } = createUserDto;
 
     const findUser = await this.findByEmail(email);
+    console.log(findUser);
 
     if (findUser) {
       throw new ConflictException(`User already exists!`);
     }
 
-    const user = await this.prisma.user.create({ data: createUserDto });
+    const user = await this.prisma.user.create({
+      data: createUserDto,
+      include: { orders: true },
+    });
 
     delete user.password;
 
-    return await this.findOne(user.id);
+    return user;
   }
 
-  async findAll(): Promise<any> {
+  async findAll(): Promise<IUser[]> {
     const listUser = await this.prisma.user.findMany({
       select: {
         password: false,
@@ -41,7 +45,7 @@ export class UsersService {
     return listUser;
   }
 
-  async findOne(id: string): Promise<any> {
+  async findOne(id: string): Promise<IUser> {
     const findUser = await this.prisma.user.findUnique({
       where: { id },
       select: {
@@ -60,12 +64,12 @@ export class UsersService {
     return findUser;
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<IFindByEmail> {
     const findUser = await this.prisma.user.findUnique({ where: { email } });
     return findUser;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<IUser> {
     const findUser = await this.prisma.user.findUnique({ where: { id } });
     if (!findUser) {
       throw new NotFoundException(`User not found!`);
@@ -73,9 +77,10 @@ export class UsersService {
     const updateUser = await this.prisma.user.update({
       where: { id },
       data: { ...updateUserDto },
+      include: { orders: true },
     });
     delete updateUser.password;
-    return await this.findOne(updateUser.id);
+    return updateUser;
   }
 
   async remove(id: string): Promise<void> {
