@@ -6,12 +6,13 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/database/prisma.service';
+import { IUser } from '../../interface/interface';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<IUser> {
     const { email } = createUserDto;
 
     const findUser = await this.findByEmail(email);
@@ -24,10 +25,10 @@ export class UsersService {
 
     delete user.password;
 
-    return user;
+    return await this.findOne(user.id);
   }
 
-  async findAll() {
+  async findAll(): Promise<IUser[]> {
     return await this.prisma.user.findMany({
       select: {
         password: false,
@@ -63,7 +64,7 @@ export class UsersService {
     return findUser;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<IUser> {
     const findUser = await this.prisma.user.findUnique({ where: { id } });
     if (!findUser) {
       throw new NotFoundException(`User not found!`);
@@ -73,10 +74,10 @@ export class UsersService {
       data: { ...updateUserDto },
     });
     delete updateUser.password;
-    return updateUser;
+    return await this.findOne(updateUser.id);
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<void> {
     const findUser = await this.prisma.user.findUnique({ where: { id } });
     if (!findUser) {
       throw new NotFoundException(`User not found!`);

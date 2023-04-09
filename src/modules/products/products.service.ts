@@ -6,11 +6,12 @@ import {
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/database/prisma.service';
+import { IProduct } from 'src/interface/interface';
 
 @Injectable()
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto): Promise<IProduct> {
     const { name } = createProductDto;
 
     const findProduct = await this.findByName(name);
@@ -33,11 +34,11 @@ export class ProductsService {
     return findProduct;
   }
 
-  async findAll() {
+  async findAll(): Promise<IProduct[]> {
     return await this.prisma.product.findMany();
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<IProduct> {
     const findProduct = await this.prisma.product.findUnique({ where: { id } });
 
     if (!findProduct) {
@@ -47,7 +48,10 @@ export class ProductsService {
     return findProduct;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<IProduct> {
     const findProduct = await this.prisma.product.findUnique({ where: { id } });
 
     if (!findProduct) {
@@ -62,7 +66,7 @@ export class ProductsService {
     return updateProduct;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<void> {
     const findProduct = await this.prisma.product.findUnique({ where: { id } });
     if (!findProduct) {
       throw new NotFoundException(`Product not found!`);
