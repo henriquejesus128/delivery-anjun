@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
+  password String
+  orders   Order[]
+
+  @@map("users")
+}
+
+model Product {
+  id      String  @id @default(uuid())
+  name    String  @unique
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String?
+
+  @@map("products")
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  street     String
+  number     String
+  complement String
+  neighborhood String
+  city       String
+  state      String
+  zipCode    String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId String   @unique
+
+  @@map("adresses")
+}
+
+model Customer {
+  id      String   @id @default(uuid())
+  name    String
+  orders  Order[]
+  address Address?
+
+  @@map("customers")
+}
+
+model Order {
+  id          String    @id @default(uuid())
+  status      Status?    @default(created)
+  recipient   Customer  @relation(fields: [recipientId], references: [id])
+  recipientId String
+  sender      User      @relation(fields: [senderId], references: [id])
+  senderId    String   
+  products    Product[]
+
+  @@map("orders")
+}
+
+enum Status {
+  created
+  delivered
+  onTheWay
+  canceled
+}
