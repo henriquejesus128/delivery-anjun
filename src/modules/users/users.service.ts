@@ -12,7 +12,7 @@ import { IUser } from '../../interface/interface';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto): Promise<IUser> {
+  async create(createUserDto: CreateUserDto) {
     const { email } = createUserDto;
 
     const findUser = await this.findByEmail(email);
@@ -28,8 +28,8 @@ export class UsersService {
     return await this.findOne(user.id);
   }
 
-  async findAll(): Promise<IUser[]> {
-    return await this.prisma.user.findMany({
+  async findAll(): Promise<any> {
+    const listUser = await this.prisma.user.findMany({
       select: {
         password: false,
         id: true,
@@ -38,9 +38,10 @@ export class UsersService {
         orders: true,
       },
     });
+    return listUser;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<any> {
     const findUser = await this.prisma.user.findUnique({
       where: { id },
       select: {
@@ -64,7 +65,7 @@ export class UsersService {
     return findUser;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<IUser> {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const findUser = await this.prisma.user.findUnique({ where: { id } });
     if (!findUser) {
       throw new NotFoundException(`User not found!`);
