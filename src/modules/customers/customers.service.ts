@@ -18,10 +18,6 @@ export class CustomersService {
   async create(createCustomerDto: CreateCustomerDto): Promise<ICustomer> {
     const { address, name } = createCustomerDto;
 
-    if (address.zipCode) {
-      const resp = await this.zipCodeService.fetchZipCode(address.zipCode);
-    }
-
     const findCustomer = await this.prisma.customer.findFirst({
       where: { name: name },
     });
@@ -30,13 +26,27 @@ export class CustomersService {
       throw new ConflictException(`Customer already exists!`);
     }
 
+    const resp = await this.zipCodeService.fetchZipCode(address.zipCode);
+
+    if (!resp.street) {
+      const customer = await this.prisma.customer.create({
+        data: {
+          ...createCustomerDto,
+          address: { create: { ...address, ...resp } },
+        },
+        include: { address: true },
+      });
+      return customer;
+    }
+
     const customer = await this.prisma.customer.create({
       data: {
         ...createCustomerDto,
         address: { create: { ...address } },
       },
+      include: { address: true },
     });
-    return await this.findOne(customer.id);
+    return customer;
   }
 
   async findAll(): Promise<ICustomer[]> {
@@ -98,9 +108,10 @@ export class CustomersService {
     const updateCustomer = await this.prisma.customer.update({
       where: { id },
       data: { ...updateCustomerDto, address: { update: { ...address } } },
+      include: { address: true },
     });
 
-    return await this.findOne(updateCustomer.id);
+    return updateCustomer;
   }
 
   async remove(id: string): Promise<void> {
