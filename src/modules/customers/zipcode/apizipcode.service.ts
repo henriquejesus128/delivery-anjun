@@ -15,11 +15,20 @@ interface ZipCode {
 }
 
 @Injectable()
-export class ApiZipCodeService {
+export class zipCodeService {
   async fetchZipCode(zipCode: string): Promise<ZipCode> {
-    const response = await axios.get(
+    const { data } = await axios.get(
       `https://viacep.com.br/ws/${zipCode}/json/`,
     );
-    return response.data;
+    const newData = {
+      zipCode: data.cep,
+      street: data.logradouro,
+      complement: data.complemento,
+      state: data.uf,
+      city: data.localidade,
+      neighborhood: data.bairro,
+    };
+    console.log(data);
+    return data;
   }
 }
