@@ -1,22 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-interface ZipCode {
-  cep: string | null;
-  logradouro: string | null;
-  complemento: string | null;
-  bairro: string | null;
-  localidade: string | null;
-  uf: string | null;
-  ibge: string | null;
-  gia: string | null;
-  ddd: string | null;
-  siafi: string | null;
+interface IZipCode {
+  zipCode: string | null;
+  street: string | null;
+  complement: string | null;
+  neighborhood: string | null;
+  city: string | null;
+  state: string | null;
 }
 
 @Injectable()
-export class zipCodeService {
-  async fetchZipCode(zipCode: string): Promise<ZipCode> {
+export class ZipCodeService {
+  async fetchZipCode(zipCode: string): Promise<IZipCode> {
     const { data } = await axios.get(
       `https://viacep.com.br/ws/${zipCode}/json/`,
     );
@@ -28,7 +24,7 @@ export class zipCodeService {
       city: data.localidade,
       neighborhood: data.bairro,
     };
-    console.log(data);
-    return data;
+
+    return newData;
   }
 }
