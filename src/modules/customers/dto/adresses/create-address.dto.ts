@@ -20,6 +20,11 @@ export class CreateAddressDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  neighborhood: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   city: string;
 
   @ApiProperty()
@@ -30,7 +35,7 @@ export class CreateAddressDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  zipCope: string;
+  zipCode: string;
 
   @ApiProperty()
   @IsString()
