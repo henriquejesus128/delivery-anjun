@@ -16,7 +16,6 @@ export class UsersService {
     const { email } = createUserDto;
 
     const findUser = await this.findByEmail(email);
-    console.log(findUser);
 
     if (findUser) {
       throw new ConflictException(`User already exists!`);
