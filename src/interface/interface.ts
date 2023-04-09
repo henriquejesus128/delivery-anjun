@@ -37,3 +37,16 @@ export interface IAddress {
   state: string;
   zipCope: string;
 }
+
+export interface IOrder {
+  id: string;
+  status: string;
+  recipientId: string;
+  senderId: string;
+  products: IProductOrder[];
+}
+
+export interface IProductOrder {
+  id: string;
+  name: string;
+}
