@@ -21,3 +21,19 @@ export interface IProduct {
 export interface ILogin {
   token: string;
 }
+
+export interface ICustomer {
+  id: string;
+  name: string;
+  address: IAddress;
+}
+
+export interface IAddress {
+  id: string;
+  street: string;
+  number: string;
+  complement: string;
+  city: string;
+  state: string;
+  zipCope: string;
+}
