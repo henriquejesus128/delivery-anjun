@@ -2,10 +2,17 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  orders: IOrder[] | [];
+  orders: IOrderUser[];
 }
 
-export interface IOrder {
+export interface IFindByEmail {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface IOrderUser {
   id: string;
   status: string;
   recipientId: string;
