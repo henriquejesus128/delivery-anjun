@@ -5,6 +5,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import { CustomersService } from '../customers/customers.service';
 import { ProductsService } from '../products/products.service';
 import { Product } from '@prisma/client';
+import { IOrder } from 'src/interface/interface';
 
 @Injectable()
 export class OrdersService {
@@ -17,7 +18,7 @@ export class OrdersService {
     createOrderDto: CreateOrderDto,
     id_user: string,
     id_customer: string,
-  ) {
+  ): Promise<IOrder> {
     const findCustomer = await this.customersService.findOne(id_customer);
 
     if (!findCustomer) {
@@ -53,7 +54,7 @@ export class OrdersService {
     return this.findOne(order.id);
   }
 
-  async findAll() {
+  async findAll(): Promise<IOrder[]> {
     return await this.prisma.order.findMany({
       include: {
         products: { select: { id: true, name: true, orderId: false } },
@@ -61,7 +62,7 @@ export class OrdersService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<IOrder> {
     return await this.prisma.order.findUnique({
       where: { id },
       include: {
@@ -70,7 +71,7 @@ export class OrdersService {
     });
   }
 
-  async findByProduct(id_product: string) {
+  async findByProduct(id_product: string): Promise<IOrder[]> {
     const findOrder = await this.prisma.order.findMany({
       where: { products: { every: { id: id_product } } },
       include: {
@@ -80,7 +81,7 @@ export class OrdersService {
     return findOrder;
   }
 
-  async findBySender(id_sender: string) {
+  async findBySender(id_sender: string): Promise<IOrder[]> {
     const findOrder = await this.prisma.order.findMany({
       where: { senderId: id_sender },
       include: {
@@ -90,7 +91,7 @@ export class OrdersService {
     return findOrder;
   }
 
-  async findByRecipient(id_recipient: string) {
+  async findByRecipient(id_recipient: string): Promise<IOrder[]> {
     const findOrder = await this.prisma.order.findMany({
       where: { recipientId: id_recipient },
       include: {
@@ -100,7 +101,7 @@ export class OrdersService {
     return findOrder;
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto) {
+  async update(id: string, updateOrderDto: UpdateOrderDto): Promise<IOrder> {
     const updateOrder = await this.prisma.order.update({
       where: { id },
       data: { ...updateOrderDto },
