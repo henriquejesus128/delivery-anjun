@@ -2,7 +2,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  orders: IOrder[] | null;
+  orders: IOrder[] | [];
 }
 
 export interface IOrder {
@@ -33,9 +33,10 @@ export interface IAddress {
   street: string;
   number: string;
   complement: string;
+  neighborhood: string;
   city: string;
   state: string;
-  zipCope: string;
+  zipCode: string;
 }
 
 export interface IOrder {
