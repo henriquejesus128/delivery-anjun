@@ -8,13 +8,35 @@ O Delivery Anjun é uma aplicação de entregas, que utiliza as seguintes tecnol
 - [MySQL](https://www.mysql.com/) - sistema gerenciador de banco de dados relacional.
 - [Swagger](https://swagger.io/) - ferramenta para documentação de APIs.
 
-## Instalação
+# Requisitos de instalação
 
-Para instalar as dependências do projeto, execute o seguinte comando:
+Para executar este projeto, é necessário ter o Node.js instalado em sua máquina. Recomendamos a versão 12.18.0 ou superior.
+
+Você pode baixar o Node.js a partir do site oficial: https://nodejs.org/en/
+
+# Gerenciador de pacotes
+
+O gerenciador de pacotes que utilizamos neste projeto é o Yarn. No entanto, se você prefere utilizar o NPM, é possível instalar as dependências do projeto utilizando o comando `npm install` no lugar de `yarn install`.
+
+Para instalar o Yarn, siga as instruções no site oficial: https://yarnpkg.com/getting-started/install
+
+# Requisitos de instalação
+
+Para executar este projeto, é necessário ter o Node.js instalado em sua máquina. Recomendamos a versão 12.18.0 ou superior.
+
+Você pode baixar o Node.js a partir do site oficial: https://nodejs.org/en/
+
+# Gerenciador de pacotes
+
+O gerenciador de pacotes que utilizamos neste projeto é o NPM.
+
+Para instalar as dependências do projeto, execute o seguinte comando no terminal, dentro da pasta raiz do projeto:
 
 ```bash
 npm install
 ```
+
+Isso irá baixar e instalar todas as dependências necessárias para executar o projeto. Certifique-se de ter conexão com a internet durante o processo de instalação.
 
 ## Uso
 
