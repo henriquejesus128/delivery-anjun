@@ -10,6 +10,7 @@ import {
   ClassSerializerInterceptor,
   UseGuards,
   ParseUUIDPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/customers/create-customer.dto';
@@ -23,6 +24,7 @@ export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Post()
+  @HttpCode(201)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -31,6 +33,7 @@ export class CustomersController {
   }
 
   @Get()
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -39,6 +42,7 @@ export class CustomersController {
   }
 
   @Get(':id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -47,6 +51,7 @@ export class CustomersController {
   }
 
   @Patch(':id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -58,6 +63,7 @@ export class CustomersController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   remove(@Param('id', ParseUUIDPipe) id: string) {

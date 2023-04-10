@@ -10,6 +10,7 @@ import {
   ClassSerializerInterceptor,
   UseGuards,
   ParseUUIDPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -23,6 +24,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @HttpCode(201)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -31,6 +33,7 @@ export class ProductsController {
   }
 
   @Get()
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findAll() {
@@ -38,6 +41,7 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
@@ -45,6 +49,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -56,6 +61,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   remove(@Param('id', ParseUUIDPipe) id: string) {
