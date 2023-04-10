@@ -10,6 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
   ClassSerializerInterceptor,
+  HttpCode,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -23,6 +24,7 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post(':id')
+  @HttpCode(201)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -36,6 +38,7 @@ export class OrdersController {
   }
 
   @Get()
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findAll() {
@@ -43,6 +46,7 @@ export class OrdersController {
   }
 
   @Get('product/:id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findByProduct(@Param('id') id: string) {
@@ -50,6 +54,7 @@ export class OrdersController {
   }
 
   @Get('sender/:id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findBySender(@Param('id') id: string) {
@@ -57,6 +62,7 @@ export class OrdersController {
   }
 
   @Get('recipient/:id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   findByRecipient(@Param('id') id: string) {
@@ -64,6 +70,7 @@ export class OrdersController {
   }
 
   @Patch(':id')
+  @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
