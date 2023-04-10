@@ -1,6 +1,6 @@
 # Delivery Anjun 🛵🍕
 
-O Delivery Anjun é uma aplicação de delivery de comida, que utiliza as seguintes tecnologias:
+O Delivery Anjun é uma aplicação de entregas, que utiliza as seguintes tecnologias:
 
 - [NestJS](https://nestjs.com/) - framework para construção de aplicativos Node.js eficientes e escaláveis.
 - [TypeScript](https://www.typescriptlang.org/) - superset do JavaScript que adiciona tipagem estática ao código.
