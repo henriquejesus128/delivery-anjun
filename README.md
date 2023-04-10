@@ -10,7 +10,7 @@ O Delivery Anjun é uma aplicação de entregas, que utiliza as seguintes tecnol
 
 # Requisitos de instalação
 
-Para executar este projeto, é necessário ter o Node.js instalado em sua máquina. Recomendamos a versão 12.18.0 ou superior.
+Para executar este projeto, é necessário ter o Node.js instalado em sua máquina. Recomendamos a versão 16.3 ou superior.
 
 Você pode baixar o Node.js a partir do site oficial: https://nodejs.org/en/
 
