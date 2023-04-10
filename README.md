@@ -26,10 +26,6 @@ npm run start:dev
 
 A documentação API pode ser acessada em [Documentação](http://localhost:3000/api).
 
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ## Badges
 
 ![NestJS](https://img.shields.io/badge/-NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)
